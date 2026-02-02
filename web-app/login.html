@@ -1,0 +1,424 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - AgriSmart</title>
+    <meta name="description" content="Login to AgriSmart - Your AI-powered farming assistant">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css?v=20260131">
+    <link rel="stylesheet" href="dashboard-theme.css">
+</head>
+<body class="dashboard-theme page-login">
+    <!-- Site Version Banner -->
+
+    
+    <!-- Dashboard Parallax Background -->
+    <div class="dashboard-parallax-wrapper">
+        <div class="parallax-layer parallax-layer-1"></div>
+        <div class="parallax-layer parallax-layer-2"></div>
+        <div class="parallax-layer parallax-layer-3"></div>
+        <div class="parallax-mesh"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        <div class="crop-zone-map"></div>
+    </div>
+    
+    <!-- Navigation -->
+    <nav class="navbar" id="navbar">
+        <div class="container">
+            <a href="index.html" class="logo">
+                <div class="logo-icon">🌾</div>
+                <span>AgriSmart</span>
+            </a>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="login.html" class="active">Login</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <main class="home-shell">
+    <section class="hero glass" style="padding: var(--space-12) 0;">
+        <div class="container">
+            <h1>Welcome Back! 👋</h1>
+            <p>Sign in to access your personalized farming dashboard</p>
+        </div>
+    </section>
+
+    <!-- Auth Container -->
+    <section class="auth-container">
+        <div class="container">
+            <div class="auth-card">
+                <h2>🔐 User Login</h2>
+                
+                <!-- Interactive Login Character -->
+                <div class="login-character" id="loginCharacter">
+                    <svg width="120" height="120" viewBox="0 0 120 120" class="character-svg">
+                        <!-- Character Body -->
+                        <circle cx="60" cy="60" r="40" fill="#86efac" opacity="0.8" class="character-body"/>
+                        <!-- Character Face -->
+                        <circle cx="60" cy="50" r="25" fill="#dcfce7" class="character-face"/>
+                        
+                        <!-- Eyes - Happy State (default) -->
+                        <g class="eyes happy-eyes">
+                            <ellipse cx="52" cy="45" rx="3" ry="4" fill="#22c55e" class="eye left-eye"/>
+                            <ellipse cx="68" cy="45" rx="3" ry="4" fill="#22c55e" class="eye right-eye"/>
+                            <circle cx="51" cy="44" r="1" fill="#ffffff" class="eye-shine left-shine"/>
+                            <circle cx="67" cy="44" r="1" fill="#ffffff" class="eye-shine right-shine"/>
+                        </g>
+                        
+                        <!-- Eyes - Sad State -->
+                        <g class="eyes sad-eyes" style="opacity: 0;">
+                            <ellipse cx="52" cy="48" rx="2" ry="3" fill="#64748b" class="eye left-eye-sad"/>
+                            <ellipse cx="68" cy="48" rx="2" ry="3" fill="#64748b" class="eye right-eye-sad"/>
+                            <path d="M49,42 Q52,40 55,42" stroke="#94a3b8" stroke-width="1" fill="none" class="eyebrow left-eyebrow"/>
+                            <path d="M65,42 Q68,40 71,42" stroke="#94a3b8" stroke-width="1" fill="none" class="eyebrow right-eyebrow"/>
+                        </g>
+                        
+                        <!-- Mouth - Happy State (default) -->
+                        <path d="M52,58 Q60,66 68,58" stroke="#22c55e" stroke-width="2" fill="none" class="mouth happy-mouth" stroke-linecap="round"/>
+                        
+                        <!-- Mouth - Sad State -->
+                        <path d="M52,62 Q60,55 68,62" stroke="#64748b" stroke-width="2" fill="none" class="mouth sad-mouth" style="opacity: 0;" stroke-linecap="round"/>
+                        
+                        <!-- Animated Particles -->
+                        <g class="particles">
+                            <circle cx="35" cy="35" r="2" fill="#22c55e" opacity="0.6" class="particle particle-1">
+                                <animate attributeName="cy" values="35;25;35" dur="3s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.6;0.2;0.6" dur="3s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="85" cy="40" r="1.5" fill="#06b6d4" opacity="0.5" class="particle particle-2">
+                                <animate attributeName="cy" values="40;30;40" dur="4s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.5;0.1;0.5" dur="4s" repeatCount="indefinite"/>
+                            </circle>
+                            <circle cx="25" cy="70" r="1" fill="#a855f7" opacity="0.4" class="particle particle-3">
+                                <animate attributeName="cy" values="70;60;70" dur="5s" repeatCount="indefinite"/>
+                                <animate attributeName="opacity" values="0.4;0.1;0.4" dur="5s" repeatCount="indefinite"/>
+                            </circle>
+                        </g>
+                    </svg>
+                </div>
+                
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="phone">Phone Number</label>
+                        <input type="tel" id="phone" name="phone" required placeholder="+91 98765 43210" pattern="[+0-9\s-]+" class="focus-input">
+                        <small>Enter your registered phone number (with country code)</small>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="password">Password</label>
+                        <input type="password" id="password" name="password" required placeholder="••••••••" minlength="6" class="focus-input">
+                    </div>
+
+                    <div class="form-group checkbox">
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                        <label for="remember-me">Remember me on this device</label>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary w-full">
+                        Login to Dashboard
+                    </button>
+                </form>
+
+                <div class="auth-divider">or continue with</div>
+
+                <div class="social-auth">
+                    <button class="btn-social" id="google-auth" title="Login with Google">
+                        <span>🔍</span> Google
+                    </button>
+                    <button class="btn-social" id="phone-auth" title="Login with OTP">
+                        <span>📱</span> Phone OTP
+                    </button>
+                </div>
+
+                <p class="auth-footer">
+                    Don't have an account? <a href="register.html">Create one for free</a>
+                </p>
+
+                <p class="auth-footer">
+                    <a href="#forgot-password">Forgot your password?</a>
+                </p>
+                
+                <p class="auth-footer">
+                    <a href="#clear-data" id="clear-data-link" style="color: #e74c3c;">Clear stored data & logout</a>
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>🌱 Why Choose AgriSmart?</h3>
+                <ul>
+                    <li>✅ AI-powered crop recommendations</li>
+                    <li>✅ Real-time disease detection</li>
+                    <li>✅ Weather forecasts and alerts</li>
+                    <li>✅ Market price tracking</li>
+                    <li>✅ Multilingual support (8+ languages)</li>
+                    <li>✅ Works offline with cached data</li>
+                    <li>✅ Personalized insights for your farm</li>
+                    <li>✅ Free for all farmers</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+                <p class="auth-footer">
+                    <a href="#forgot-password">Forgot your password?</a>
+                </p>
+            </div>
+
+            <div class="info-card">
+                <h3>🌱 Why Choose AgriSmart?</h3>
+                <ul>
+                    <li>✅ AI-powered crop recommendations</li>
+                    <li>✅ Real-time disease detection</li>
+                    <li>✅ Weather forecasts and alerts</li>
+                    <li>✅ Market price tracking</li>
+                    <li>✅ Multilingual support (8+ languages)</li>
+                    <li>✅ Works offline with cached data</li>
+                    <li>✅ Personalized insights for your farm</li>
+                    <li>✅ Free for all farmers</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    </main>
+
+    <!-- OTP Modal -->
+    <div id="otp-modal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <button class="close" aria-label="Close modal">&times;</button>
+            <h2>🔐 Verify with OTP</h2>
+            <p id="otp-message">Enter the 6-digit code sent to your phone</p>
+            <form id="otp-form">
+                <div class="form-group">
+                    <label for="otp">One-Time Password (OTP)</label>
+                    <input type="text" id="otp" name="otp" required placeholder="• • • • • •" pattern="[0-9]{6}" maxlength="6" style="text-align: center; letter-spacing: 0.5rem; font-size: 1.5rem;">
+                </div>
+                <p class="auth-footer" style="margin-top: var(--space-4);">
+                    Didn't receive? <a href="#resend-otp" id="resend-otp-link">Resend OTP</a>
+                </p>
+                <button type="submit" class="btn btn-primary w-full">Verify & Continue</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 AgriSmart. All rights reserved. Built with ❤️ for farmers.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/authService.js"></script>
+    <script src="js/locationService.js"></script>
+    <script src="js/notificationService.js"></script>
+    <script src="js/uiHelper.js"></script>
+    <script src="js/agriSmartApp.js"></script>
+    <script src="mobile-bridge.js"></script>
+    <script src="main.js?v=20260131"></script>
+    <script src="system-interconnection.js"></script>
+    <style>
+        /* Login Character Styles */
+        .login-character {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+        }
+        
+        .character-svg {
+            transition: all 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+            filter: drop-shadow(0 10px 30px rgba(34, 197, 94, 0.3));
+        }
+        
+        .character-svg:hover {
+            transform: scale(1.05) rotate(-2deg);
+        }
+        
+        .character-body {
+            transition: all 0.6s ease;
+        }
+        
+        .character-face {
+            transition: all 0.5s ease;
+        }
+        
+        .eyes, .mouth {
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+        }
+        
+        /* Focused state animations */
+        .character-focused .character-body {
+            fill: #22c55e;
+            opacity: 1;
+        }
+        
+        .character-focused .character-face {
+            fill: #ecfdf5;
+            transform: scale(1.1);
+        }
+        
+        .character-focused .happy-eyes {
+            opacity: 1;
+        }
+        
+        .character-focused .sad-eyes {
+            opacity: 0;
+        }
+        
+        .character-focused .happy-mouth {
+            opacity: 1;
+        }
+        
+        .character-focused .sad-mouth {
+            opacity: 0;
+        }
+        
+        .character-focused .particles {
+            animation: particleBurst 2s ease infinite;
+        }
+        
+        /* Sad state animations */
+        .character-sad .character-body {
+            fill: #64748b;
+            opacity: 0.6;
+        }
+        
+        .character-sad .character-face {
+            fill: #f1f5f9;
+            transform: scale(0.95);
+        }
+        
+        .character-sad .happy-eyes {
+            opacity: 0;
+        }
+        
+        .character-sad .sad-eyes {
+            opacity: 1;
+        }
+        
+        .character-sad .happy-mouth {
+            opacity: 0;
+        }
+        
+        .character-sad .sad-mouth {
+            opacity: 1;
+        }
+        
+        @keyframes particleBurst {
+            0%, 100% { 
+                transform: scale(1); 
+                opacity: 0.6; 
+            }
+            50% { 
+                transform: scale(1.2); 
+                opacity: 1; 
+            }
+        }
+    </style>
+    <script>
+    <script>
+        // Navbar scroll effect
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Close modal
+        const modal = document.getElementById('otp-modal');
+        const closeBtn = modal.querySelector('.close');
+        
+        closeBtn.addEventListener('click', () => {
+            modal.style.display = 'none';
+        });
+        
+        window.addEventListener('click', (e) => {
+            if (e.target === modal) {
+                modal.style.display = 'none';
+            }
+        });
+        
+        // Phone OTP button
+        document.getElementById('phone-auth').addEventListener('click', () => {
+            modal.style.display = 'flex';
+        });
+
+        // Interactive Login Character Animation
+        const character = document.getElementById('loginCharacter');
+        const focusInputs = document.querySelectorAll('.focus-input');
+        
+        // Function to set character to happy/focused state
+        function setCharacterHappy() {
+            character.classList.remove('character-sad');
+            character.classList.add('character-focused');
+        }
+        
+        // Function to set character to sad/idle state
+        function setCharacterSad() {
+            character.classList.remove('character-focused');
+            character.classList.add('character-sad');
+        }
+        
+        // Function to set character to neutral state
+        function setCharacterNeutral() {
+            character.classList.remove('character-focused', 'character-sad');
+        }
+        
+        // Add event listeners to input fields
+        focusInputs.forEach(input => {
+            input.addEventListener('mouseenter', setCharacterHappy);
+            input.addEventListener('focus', setCharacterHappy);
+            input.addEventListener('mouseleave', (e) => {
+                // Only set to sad if the input is not focused
+                if (document.activeElement !== e.target) {
+                    setCharacterSad();
+                }
+            });
+            input.addEventListener('blur', () => {
+                // Set to sad after a short delay to allow for smooth transitions
+                setTimeout(setCharacterSad, 200);
+            });
+        });
+        
+        // Set initial state to neutral
+        setCharacterNeutral();
+        
+        // Add a subtle hover effect when mouse enters the character area
+        character.addEventListener('mouseenter', () => {
+            if (!character.classList.contains('character-focused')) {
+                character.classList.add('character-hover');
+            }
+        });
+        
+        character.addEventListener('mouseleave', () => {
+            character.classList.remove('character-hover');
+        });
+
+        // Clear stored data functionality
+        document.getElementById('clear-data-link').addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to clear all stored data and logout? This action cannot be undone.')) {
+                StorageManager.logout();
+                Notifications.show('All data cleared successfully. You can now login with fresh credentials.', 'success');
+                // Refresh the page to clear any cached state
+                setTimeout(() => window.location.reload(), 1000);
+            }
+        });
+    </script>
+    </script>
+</body>
+</html>

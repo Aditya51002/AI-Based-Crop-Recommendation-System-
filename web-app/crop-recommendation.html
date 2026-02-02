@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crop Recommendation - AgriSmart</title>
+    <link rel="stylesheet" href="styles.css?v=20260131">
+    <link rel="stylesheet" href="dashboard-theme.css">
+</head>
+<body class="dashboard-theme page-crop">
+    <!-- Site Version Banner -->
+
+    
+    <!-- Dashboard Parallax Background -->
+    <div class="dashboard-parallax-wrapper">
+        <div class="parallax-layer parallax-layer-1"></div>
+        <div class="parallax-layer parallax-layer-2"></div>
+        <div class="parallax-layer parallax-layer-3"></div>
+        <div class="parallax-mesh"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+        <div class="crop-zone-map"></div>
+    </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌾 AgriSmart</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html?nocache=1">Dashboard</a></li>
+                <li><a href="crop-recommendation.html" class="active">Crop Recommendation</a></li>
+                <li><a href="disease-detection.html">Disease Detection</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="market-price.html">Market Prices</a></li>
+                <li><a href="chatbot.html">Chatbot</a></li>
+                <li><a href="history.html">History</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li class="auth-section">
+                    <span class="user-name">User</span>
+                    <a href="#" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <main class="home-shell">
+    <section class="hero glass">
+        <div class="container">
+            <h1>🌱 <span class="hero-headline"><span class="highlight">Intelligent</span> Crop Recommendation</span></h1>
+            <p>Get AI-powered crop suggestions based on soil and weather conditions</p>
+        </div>
+    </section>
+
+    <section class="features">
+        <div class="container">
+            <div class="result-card">
+                <h2>Enter Your Field Information</h2>
+                <form id="crop-form">
+                    <div class="form-group">
+                        <label for="nitrogen">Nitrogen (N) Content (kg/ha)</label>
+                        <input type="number" id="nitrogen" name="nitrogen" required min="0" max="200" value="50">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="phosphorus">Phosphorus (P) Content (kg/ha)</label>
+                        <input type="number" id="phosphorus" name="phosphorus" required min="0" max="200" value="45">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="potassium">Potassium (K) Content (kg/ha)</label>
+                        <input type="number" id="potassium" name="potassium" required min="0" max="200" value="40">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="ph">Soil pH Level</label>
+                        <input type="number" id="ph" name="ph" required min="3" max="10" step="0.1" value="6.5">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="rainfall">Average Rainfall (mm)</label>
+                        <input type="number" id="rainfall" name="rainfall" required min="0" max="3000" value="800">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="temperature">Average Temperature (°C)</label>
+                        <input type="number" id="temperature" name="temperature" required min="-10" max="50" step="0.1" value="25">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="humidity">Average Humidity (%)</label>
+                        <input type="number" id="humidity" name="humidity" required min="0" max="100" value="65">
+                    </div>
+
+                    <div class="form-group">
+                        <label for="location">Location/District</label>
+                        <input type="text" id="location" name="location" required placeholder="Enter your location">
+                    </div>
+
+                    <button type="submit" class="btn btn-primary">Get Recommendations</button>
+                </form>
+            </div>
+
+            <div id="crop-results"></div>
+        </div>
+    </section>
+    </main>
+
+    <footer class="footer theme-dark">
+        <div class="container">
+            <p>&copy; 2026 AgriSmart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/authService.js"></script>
+    <script src="js/cropService.js"></script>
+    <script src="js/locationService.js"></script>
+    <script src="js/notificationService.js"></script>
+    <script src="js/uiHelper.js"></script>
+    <script src="js/agriSmartApp.js"></script>
+    <script src="mobile-bridge.js"></script>
+    <script src="api.js"></script>
+    <script src="main.js?v=20260131"></script>
+    <script src="system-interconnection.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,594 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>History - AgriSmart</title>
+    <link rel="stylesheet" href="styles.css?v=20260131">
+    <link rel="stylesheet" href="dashboard-theme.css">
+    <style>
+        .history-filter {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 2rem;
+            flex-wrap: wrap;
+        }
+        
+        .filter-btn {
+            padding: 0.75rem 1.5rem;
+            border: 2px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .filter-btn.active {
+            background: #2c5f2d;
+            color: white;
+            border-color: #2c5f2d;
+        }
+        
+        .history-item {
+            background: white;
+            border-left: 4px solid #2c5f2d;
+            padding: 1.5rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s;
+        }
+        
+        .history-item:hover {
+            transform: translateX(5px);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+        }
+        
+        .history-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .history-type {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: #e8f5e9;
+            color: #2c5f2d;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: bold;
+        }
+        
+        .history-date {
+            color: #999;
+            font-size: 0.9rem;
+        }
+        
+        .history-content {
+            margin: 1rem 0;
+        }
+        
+        .history-actions {
+            display: flex;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+        
+        .btn-small {
+            padding: 0.5rem 1rem;
+            font-size: 0.85rem;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            transition: opacity 0.3s;
+        }
+        
+        .btn-small:hover {
+            opacity: 0.8;
+        }
+        
+        .btn-view {
+            background: #2c5f2d;
+            color: white;
+        }
+        
+        .btn-delete {
+            background: #ff6b6b;
+            color: white;
+        }
+        
+        .btn-export {
+            background: #ff9800;
+            color: white;
+        }
+        
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 2rem;
+        }
+        
+        .pagination button {
+            padding: 0.5rem 1rem;
+            border: 1px solid #ddd;
+            background: white;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        
+        .pagination button.active {
+            background: #2c5f2d;
+            color: white;
+            border-color: #2c5f2d;
+        }
+    </style>
+</head>
+<body class="dashboard-theme page-history">
+    <!-- Site Version Banner -->
+
+    <div class="mesh-overlay" aria-hidden="true"></div>
+    <!-- Dashboard Parallax Background -->
+    <div class="dashboard-parallax-wrapper">
+        <div class="parallax-layer parallax-layer-1"></div>
+        <div class="parallax-layer parallax-layer-2"></div>
+        <div class="parallax-layer parallax-layer-3"></div>
+        <div class="parallax-mesh"></div>
+        <div class="floating-orb orb-1"></div>
+        <div class="floating-orb orb-2"></div>
+        <div class="floating-orb orb-3"></div>
+            <div class="crop-zone-map"></div>
+    </div>
+    <nav class="navbar">
+        <div class="container">
+            <div class="logo">🌾 AgriSmart</div>
+            <ul class="nav-menu">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="dashboard.html?nocache=1">Dashboard</a></li>
+                <li><a href="crop-recommendation.html">Crop Recommendation</a></li>
+                <li><a href="disease-detection.html">Disease Detection</a></li>
+                <li><a href="weather.html">Weather</a></li>
+                <li><a href="market-price.html">Market Prices</a></li>
+                <li><a href="chatbot.html">Chatbot</a></li>
+                <li><a href="history.html" class="active">History</a></li>
+                <li><a href="settings.html">Settings</a></li>
+                <li><a href="profile.html">Profile</a></li>
+                <li class="auth-section">
+                    <span class="user-name">User</span>
+                    <a href="#" id="logout-btn">Logout</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+        <main class="home-shell">
+                <!-- Duplicate navigation section removed -->
+        </div>
+    </nav>
+
+    <section class="hero glass">
+        <div class="container">
+            <h1>📜 Your Activity History</h1>
+            <p>Track all your recommendations, detections, and interactions</p>
+        </div>
+    </section>
+        </main>
+
+    <section class="features">
+        <div class="container">
+            <!-- Filters -->
+            <div class="result-card">
+                <h3>Filter History</h3>
+                <div class="history-filter">
+                    <button class="filter-btn active" data-filter="all">All Activities</button>
+                    <button class="filter-btn" data-filter="crop">Crop Recommendations</button>
+                    <button class="filter-btn" data-filter="disease">Disease Detections</button>
+                    <button class="filter-btn" data-filter="weather">Weather Checks</button>
+                    <button class="filter-btn" data-filter="market">Market Price Views</button>
+                    <button class="filter-btn" data-filter="chat">Chat Messages</button>
+                </div>
+
+                <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+                    <input type="date" id="start-date" placeholder="From Date">
+                    <input type="date" id="end-date" placeholder="To Date">
+                    <button class="btn btn-primary" id="search-btn">Search</button>
+                    <button class="btn btn-secondary" id="export-btn">📥 Export CSV</button>
+                    <button class="btn btn-secondary" id="clear-btn">🗑️ Clear All</button>
+                </div>
+            </div>
+
+            <!-- History Items -->
+            <div id="history-items" style="margin-top: 2rem;">
+                <div class="history-item">
+                    <div class="history-header">
+                        <div>
+                            <span class="history-type">🌱 Crop Recommendation</span>
+                            <span class="history-date">January 22, 2025 - 3:45 PM</span>
+                        </div>
+                        <div>
+                            Score: <strong>92/100</strong>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Recommended Crops:</strong> Rice, Wheat, Maize</p>
+                        <p><strong>Top Choice:</strong> Rice (Suitability: 92%, Predicted Yield: 55 tonnes/ha)</p>
+                        <p><strong>Farm Details:</strong> Location - Punjab, Soil pH - 6.5, NPK - 45:30:35</p>
+                    </div>
+                    <div class="history-actions">
+                        <a href="#" class="btn-small btn-view">View Details</a>
+                        <a href="#" class="btn-small btn-export">Export Report</a>
+                        <a href="#" class="btn-small btn-delete">Delete</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-header">
+                        <div>
+                            <span class="history-type">🔬 Disease Detection</span>
+                            <span class="history-date">January 21, 2025 - 10:20 AM</span>
+                        </div>
+                        <div>
+                            Confidence: <strong>94.5%</strong>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Disease Detected:</strong> Late Blight</p>
+                        <p><strong>Severity:</strong> Moderate</p>
+                        <p><strong>Affected Crop:</strong> Potato</p>
+                        <p><strong>Treatment:</strong> Apply copper-based fungicide, improve air circulation</p>
+                    </div>
+                    <div class="history-actions">
+                        <a href="#" class="btn-small btn-view">View Details</a>
+                        <a href="#" class="btn-small btn-export">Export Report</a>
+                        <a href="#" class="btn-small btn-delete">Delete</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-header">
+                        <div>
+                            <span class="history-type">💰 Market Price Check</span>
+                            <span class="history-date">January 20, 2025 - 5:15 PM</span>
+                        </div>
+                        <div>
+                            Trend: <strong>📈 Up</strong>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Crop Checked:</strong> Wheat</p>
+                        <p><strong>Markets Checked:</strong> Ludhiana, Amritsar, Jalandhar</p>
+                        <p><strong>Current Price:</strong> ₹2,150/quintal</p>
+                        <p><strong>Recommendation:</strong> Good time to sell - prices trending upward</p>
+                    </div>
+                    <div class="history-actions">
+                        <a href="#" class="btn-small btn-view">View Details</a>
+                        <a href="#" class="btn-small btn-export">Export Report</a>
+                        <a href="#" class="btn-small btn-delete">Delete</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-header">
+                        <div>
+                            <span class="history-type">🌤️ Weather Check</span>
+                            <span class="history-date">January 19, 2025 - 8:30 AM</span>
+                        </div>
+                        <div>
+                            Status: <strong>📌 Clear</strong>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Location:</strong> Punjab</p>
+                        <p><strong>Current Conditions:</strong> 28°C, Humidity 65%, Wind 10 km/h</p>
+                        <p><strong>7-Day Forecast:</strong> Mostly clear with 30% chance of rain on Day 4</p>
+                    </div>
+                    <div class="history-actions">
+                        <a href="#" class="btn-small btn-view">View Details</a>
+                        <a href="#" class="btn-small btn-export">Export Report</a>
+                        <a href="#" class="btn-small btn-delete">Delete</a>
+                    </div>
+                </div>
+
+                <div class="history-item">
+                    <div class="history-header">
+                        <div>
+                            <span class="history-type">🗣️ Chat Message</span>
+                            <span class="history-date">January 18, 2025 - 2:00 PM</span>
+                        </div>
+                        <div>
+                            Language: <strong>English</strong>
+                        </div>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Question:</strong> "What is the best time to plant rice this season?"</p>
+                        <p><strong>Response:</strong> "The best time to plant rice is during the monsoon season (June-July) when there is adequate rainfall. Based on your location in Punjab, you should begin transplanting by late June..."</p>
+                    </div>
+                    <div class="history-actions">
+                        <a href="#" class="btn-small btn-view">View Full</a>
+                        <a href="#" class="btn-small btn-delete">Delete</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Pagination -->
+            <div class="pagination">
+                <button class="active">1</button>
+                <button>2</button>
+                <button>3</button>
+                <button>→ Next</button>
+            </div>
+
+            <!-- Statistics -->
+            <div class="result-card" style="margin-top: 2rem;">
+                <h3>📊 Your Activity Statistics</h3>
+                <div class="feature-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🌱</div>
+                        <h4>Recommendations</h4>
+                        <p><strong>45</strong> crop recommendations made</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">🔬</div>
+                        <h4>Disease Tests</h4>
+                        <p><strong>12</strong> disease detections performed</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">💬</div>
+                        <h4>Chat Messages</h4>
+                        <p><strong>156</strong> messages exchanged</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">📈</div>
+                        <h4>Price Checks</h4>
+                        <p><strong>23</strong> market price queries</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer theme-dark">
+        <div class="container">
+            <p>&copy; 2026 AgriSmart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="mobile-bridge.js"></script>
+    <script src="api.js"></script>
+    <script src="main.js?v=20260131"></script>
+    <script src="system-interconnection.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            initializeHistory();
+        });
+        
+        function initializeHistory() {
+            checkAuthStatus();
+            loadUserProfile();
+            loadHistoryData();
+            setupHistoryFilters();
+        }
+        
+        function checkAuthStatus() {
+            const user = StorageManager.getUser();
+            if (!user) {
+                window.location.href = 'login.html';
+                return;
+            }
+            
+            // Setup logout
+            const logoutBtn = document.getElementById('logout-btn');
+            if (logoutBtn) {
+                logoutBtn.onclick = () => {
+                    StorageManager.removeUser();
+                    StorageManager.removeToken();
+                    window.location.href = 'login.html';
+                };
+            }
+        }
+        
+        function loadUserProfile() {
+            const user = StorageManager.getUser();
+            if (user) {
+                document.querySelectorAll('.user-name').forEach(el => {
+                    el.textContent = user.name || 'Farmer';
+                });
+            }
+        }
+        
+        function loadHistoryData() {
+            const history = StorageManager.getHistory();
+            const historyContainer = document.getElementById('history-container');
+            
+            if (!historyContainer) return;
+            
+            if (history.length === 0) {
+                historyContainer.innerHTML = `
+                    <div class="no-history">
+                        <h3>No History Yet</h3>
+                        <p>Start using AgriSmart features to see your activity history here.</p>
+                        <div class="quick-actions">
+                            <a href="crop-recommendation.html" class="btn btn-primary">Get Recommendations</a>
+                            <a href="disease-detection.html" class="btn btn-secondary">Detect Disease</a>
+                        </div>
+                    </div>
+                `;
+                return;
+            }
+            
+            // Sort by timestamp (newest first)
+            const sortedHistory = history.sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp));
+            
+            const historyHTML = sortedHistory.map(item => `
+                <div class="history-item" data-type="${item.type}" data-date="${new Date(item.timestamp).toISOString().split('T')[0]}">
+                    <div class="history-header">
+                        <h4>${getHistoryTitle(item)}</h4>
+                        <span class="history-date">${formatDate(item.timestamp)}</span>
+                    </div>
+                    <div class="history-content">
+                        <p><strong>Type:</strong> ${item.type}</p>
+                        ${item.crop ? `<p><strong>Crop:</strong> ${item.crop}</p>` : ''}
+                        ${item.disease ? `<p><strong>Disease:</strong> ${item.disease}</p>` : ''}
+                        ${item.location ? `<p><strong>Location:</strong> ${item.location}</p>` : ''}
+                        ${item.result ? `<p><strong>Result:</strong> ${item.result}</p>` : ''}
+                    </div>
+                    <div class="history-actions">
+                        <button onclick="viewHistoryDetails('${item.id}')" class="btn btn-sm">View Details</button>
+                        <button onclick="repeatAction('${item.id}')" class="btn btn-sm btn-secondary">Repeat</button>
+                    </div>
+                </div>
+            `).join('');
+            
+            historyContainer.innerHTML = historyHTML;
+            
+            // Update statistics
+            updateHistoryStats(history);
+        }
+        
+        function getHistoryTitle(item) {
+            switch(item.type) {
+                case 'crop-recommendation': return `Crop Recommendation - ${item.crop || 'Unknown'}`;
+                case 'disease-detection': return `Disease Detection - ${item.disease || 'Analyzed'}`;
+                case 'weather-check': return `Weather Check - ${item.location || 'Location'}`;
+                case 'market-price': return `Market Price - ${item.crop || 'Commodity'}`;
+                case 'chatbot': return `Chatbot Consultation`;
+                default: return `${item.type} Activity`;
+            }
+        }
+        
+        function formatDate(timestamp) {
+            return new Date(timestamp).toLocaleDateString('en-US', {
+                year: 'numeric',
+                month: 'short',
+                day: 'numeric',
+                hour: '2-digit',
+                minute: '2-digit'
+            });
+        }
+        
+        function setupHistoryFilters() {
+            const filterBtns = document.querySelectorAll('.filter-btn');
+            filterBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    // Remove active class from all buttons
+                    filterBtns.forEach(b => b.classList.remove('active'));
+                    // Add active class to clicked button
+                    this.classList.add('active');
+                    
+                    const filter = this.dataset.filter;
+                    filterHistory(filter);
+                });
+            });
+        }
+        
+        function filterHistory(type) {
+            const historyItems = document.querySelectorAll('.history-item');
+            
+            historyItems.forEach(item => {
+                if (type === 'all' || item.dataset.type === type) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        }
+        
+        function updateHistoryStats(history) {
+            const stats = {
+                recommendations: history.filter(h => h.type === 'crop-recommendation').length,
+                diseases: history.filter(h => h.type === 'disease-detection').length,
+                chats: history.filter(h => h.type === 'chatbot').length,
+                prices: history.filter(h => h.type === 'market-price').length
+            };
+            
+            // Update stat cards if they exist
+            const statCards = document.querySelectorAll('.feature-card p strong');
+            if (statCards.length >= 4) {
+                statCards[0].textContent = stats.recommendations;
+                statCards[1].textContent = stats.diseases;
+                statCards[2].textContent = stats.chats;
+                statCards[3].textContent = stats.prices;
+            }
+        }
+        
+        function viewHistoryDetails(itemId) {
+            const history = StorageManager.getHistory();
+            const item = history.find(h => h.id === itemId);
+            
+            if (!item) return;
+            
+            // Show modal or navigate to detailed view
+            alert(`History Details:\\n\\nType: ${item.type}\\nTimestamp: ${formatDate(item.timestamp)}\\n${JSON.stringify(item, null, 2)}`);
+        }
+        
+        function repeatAction(itemId) {
+            const history = StorageManager.getHistory();
+            const item = history.find(h => h.id === itemId);
+            
+            if (!item) return;
+            
+            // Navigate to appropriate page based on action type
+            switch(item.type) {
+                case 'crop-recommendation':
+                    window.location.href = 'crop-recommendation.html';
+                    break;
+                case 'disease-detection':
+                    window.location.href = 'disease-detection.html';
+                    break;
+                case 'weather-check':
+                    window.location.href = 'weather.html';
+                    break;
+                case 'market-price':
+                    window.location.href = 'market-price.html';
+                    break;
+                case 'chatbot':
+                    window.location.href = 'chatbot.html';
+                    break;
+                default:
+                    alert('Action cannot be repeated');
+            }
+        }
+    </script>
+</body>
+</html>
+                        <p><strong>78</strong> market price lookups</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 AgriSmart. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Services -->
+    <script src="config.js"></script>
+    <script src="utils.js"></script>
+    <script src="js/api.js"></script>
+    <script src="js/authService.js"></script>
+    <script src="js/cropService.js"></script>
+    <script src="js/diseaseService.js"></script>
+    <script src="js/weatherService.js"></script>
+    <script src="js/marketService.js"></script>
+    <script src="js/chatService.js"></script>
+    <script src="js/profileService.js"></script>
+    <script src="js/locationService.js"></script>
+    <script src="js/notificationService.js"></script>
+    <script src="js/uiHelper.js"></script>
+    <script src="js/agriSmartApp.js"></script>
+    <script src="mobile-bridge.js"></script>
+    <script src="api.js"></script>
+    <script src="main.js?v=20260131"></script>
+    <script src="system-interconnection.js"></script>
+    <script src="history.js"></script>
+</body>
+</html>
